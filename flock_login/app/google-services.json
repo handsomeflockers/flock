@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "440109864403",
+    "firebase_url": "https://flock-login.firebaseio.com",
+    "project_id": "flock-login",
+    "storage_bucket": "flock-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440109864403:android:0e50d421fc59b0fe",
+        "android_client_info": {
+          "package_name": "s165174_at_mail.itsligo.ie.flock_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440109864403-j59q7dl2i0mi5d8j49i6p5ua00rgtugp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "s165174_at_mail.itsligo.ie.flock_login",
+            "certificate_hash": "0474c823860f354789c363a394b5ba1fca3b1152"
+          }
+        },
+        {
+          "client_id": "440109864403-g1pt7jvu809tkdr8lf2cust6ido1to6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2C03RPvZJMadk9PHTrRnMkuKF5OhN94w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440109864403-g1pt7jvu809tkdr8lf2cust6ido1to6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
