@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonRegister;
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private EditText editTextName;
+    private EditText editTextPhoneNumber;
     private TextView textViewSignin;
     private TextView textViewLoggedInUser;
     private TextView textViewLogout;
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mDatabase;
+
 
     private static final String TAG = "MyActivity";
 
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         textViewLoggedInUser = (TextView) findViewById(R.id.textViewLoggedInUser);
 
@@ -69,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextName = (EditText) findViewById(R.id.editTextName);
+        editTextPhoneNumber = (EditText) findViewById(R.id.editTextPhoneNumber);
 
         textViewSignin = (TextView) findViewById(R.id.textViewSignin);
         textViewLogout = (TextView) findViewById(R.id.textViewLogout);
@@ -80,10 +89,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void tryWrite(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+    }
 
     private void signInExistingUser(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        final String name = editTextName.getText().toString().trim();
+        final String phoneNumber = editTextPhoneNumber.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
             //email is empty
@@ -95,9 +112,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
             return;
         }
-        //if validatioin is ok
+        if(TextUtils.isEmpty(name)){
+            //name is empty
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(phoneNumber)){
+            //phone number is empty
+            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //if validation is ok
         progressDialog.setMessage("Logging in user...");
         progressDialog.show();
+
+
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -110,7 +139,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         // signed in user can be handled in the listener.
                         if(task.isSuccessful()){
                             //user is registered
+                            //now add extra user details to database
+
+                            User user = new User(firebaseAuth.getUid(), name, phoneNumber);
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                            mDatabase.child("flock-login").child("users").child(firebaseAuth.getUid()).setValue(user);
+
+
+
+
                         }else{
                             Toast.makeText(MainActivity.this, "Could not login", Toast.LENGTH_SHORT).show();
                         }
@@ -121,9 +158,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
     private void registerUser(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        final String name = editTextName.getText().toString().trim();
+        final String phoneNumber = editTextPhoneNumber.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
             //email is empty
@@ -135,7 +175,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
             return;
         }
-        //if validatioin is ok
+        if(TextUtils.isEmpty(name)){
+            //name is empty
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(TextUtils.isEmpty(phoneNumber)){
+            //phone number is empty
+            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //if validation is ok
         progressDialog.setMessage("Registering user...");
         progressDialog.show();
 
@@ -146,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if(task.isSuccessful()){
                             //user is registered
                             Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
+                            User user = new User(firebaseAuth.getUid(), name, phoneNumber);
+                            mDatabase.child("flock-login").child("users").child(firebaseAuth.getUid()).setValue(user);
                         }else{
                             Toast.makeText(MainActivity.this, "Could not register", Toast.LENGTH_SHORT).show();
                         }
@@ -163,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view == buttonRegister){
             registerUser();
+            //tryWrite();
         }
 
         if(view == textViewSignin){
