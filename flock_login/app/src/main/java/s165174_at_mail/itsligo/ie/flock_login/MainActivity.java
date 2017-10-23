@@ -1,6 +1,7 @@
 package s165174_at_mail.itsligo.ie.flock_login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     textViewLoggedInUser.setText(user.getEmail() + " is logged in");
+                    //because user is logged in, go to group activity
+                    goToGroupActivity();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -87,6 +90,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewSignin.setOnClickListener(this);
         textViewLogout.setOnClickListener(this);
 
+    }
+
+    private void goToGroupActivity(){
+        Intent intent = new Intent(MainActivity.this, GroupActivity.class);
+        startActivity(intent);
     }
 
     private void tryWrite(){
@@ -145,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                             mDatabase.child("flock-login").child("users").child(firebaseAuth.getUid()).setValue(user);
 
-
+                            //and go to group activity
+                            goToGroupActivity();
 
 
                         }else{
@@ -198,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                             User user = new User(firebaseAuth.getUid(), name, phoneNumber);
                             mDatabase.child("flock-login").child("users").child(firebaseAuth.getUid()).setValue(user);
+                            //and go to group activity
+                            goToGroupActivity();
                         }else{
                             Toast.makeText(MainActivity.this, "Could not register", Toast.LENGTH_SHORT).show();
                         }
