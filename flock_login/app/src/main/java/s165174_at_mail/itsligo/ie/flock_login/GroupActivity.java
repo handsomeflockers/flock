@@ -59,7 +59,7 @@ public class GroupActivity extends AppCompatActivity {
         //array list for active groups
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayListOfGroups);
         //listViewGroups.setAdapter(arrayAdapter);
-
+        arrayListOfGroupObjects.clear();
         groupArrayAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, arrayListOfGroupObjects);
         listViewGroups.setAdapter(groupArrayAdapter);
 
@@ -106,23 +106,6 @@ public class GroupActivity extends AppCompatActivity {
         groups.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-/*
-                Set<String> set = new HashSet<String>();
-                Iterator i = dataSnapshot.getChildren().iterator();
-                //Set<Group> groupSet = new HashSet<Group>();
-                while(i.hasNext()){
-                    set.add(((DataSnapshot)i.next()).getKey());
-                    //set.add((String)dataSnapshot.child("Group Name").getValue());
-                    //snapshot.child("title").getValue();
-                    //groupSet.add((Group)i.next());
-                }
-                arrayListOfGroups.clear();
-                arrayListOfGroups.addAll(set);
-                //arrayListOfGrouupObjects.addAll(groupSet);
-                //Log.d("mmmmmmmmmmmmmmmmmmmm", "groupset: " + groupSet);
-                arrayAdapter.notifyDataSetChanged();
-*/
-
 
                 arrayListOfGroups.clear();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){

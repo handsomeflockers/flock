@@ -1,5 +1,6 @@
 package s165174_at_mail.itsligo.ie.flock_login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -167,10 +168,17 @@ public class CreateNewGroupActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Group created", Toast.LENGTH_SHORT).show();
 
+                goToGroups();
+
             }
         });
 
 
+    }
+
+    private void goToGroups(){
+        Intent i = new Intent(this, GroupActivity.class);
+        startActivity(i);
     }
 
 
