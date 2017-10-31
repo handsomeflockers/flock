@@ -24,6 +24,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
+    public String toString(){
+        return name + " - " + phoneNumber;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
