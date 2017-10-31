@@ -23,8 +23,9 @@ public class GroupHomeActivity extends AppCompatActivity {
     private TextView textViewHeading;
     private ListView listViewAddedMembers;
 
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> arrayListOfMembers = new ArrayList<>();
+    private ArrayAdapter<User> arrayAdapter;
+    private ArrayList<String> arrayListOfMembersString = new ArrayList<>();
+    private ArrayList<User> arrayListOfMembers = new ArrayList<>();
 
     //get reference to root of database
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference();
@@ -48,7 +49,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         listViewAddedMembers = (ListView) findViewById(R.id.listViewMembersInGroup);
 
         //array list for added members
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
+        arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
 
         listViewAddedMembers.setAdapter(arrayAdapter);
 
@@ -58,6 +59,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         if(bundle != null)
         {
             groupId =(String) bundle.get("groupId");
+            Log.d("mmmmmmmmmmmmmmm", groupId);
         }
 
         textViewHeading.setText(groupId);
@@ -69,9 +71,8 @@ public class GroupHomeActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     String ps = (String)postSnapshot.getKey();
                     Log.d("mmmmmmmmmmmmmmmm", ps);
-                    arrayListOfMembers.add(ps);
+                    arrayListOfMembersString.add(ps);
                 }
-                arrayAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError firebaseError) {
@@ -80,5 +81,35 @@ public class GroupHomeActivity extends AppCompatActivity {
             }
 
         });
+
+        getUsers();
+        arrayAdapter.notifyDataSetChanged();
+    }
+
+    public void getUsers(){
+        //arrayAdapter.clear();
+        users.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    for (String object: arrayListOfMembersString){
+                        if(ds.getKey().equals(object)){
+                            User u = ds.getValue(User.class);
+                            Log.d("u/tostring", u.toString());
+                            arrayListOfMembers.add(u);
+                            arrayAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        arrayAdapter.notifyDataSetChanged();
     }
 }

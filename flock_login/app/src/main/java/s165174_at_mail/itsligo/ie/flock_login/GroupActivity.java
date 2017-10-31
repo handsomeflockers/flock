@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,9 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+
 //gjhkl
 public class GroupActivity extends AppCompatActivity {
 
@@ -36,9 +33,12 @@ public class GroupActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> arrayListOfGroups = new ArrayList<>();
+    private ArrayList<Group> arrayListOfGroupObjects = new ArrayList<>();
+    private ArrayAdapter<Group> groupArrayAdapter;
+
 
     //get reference to right part of database
-    private DatabaseReference groups = FirebaseDatabase.getInstance().getReference("groups");
+    private DatabaseReference groups;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -58,7 +58,12 @@ public class GroupActivity extends AppCompatActivity {
 
         //array list for active groups
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayListOfGroups);
-        listViewGroups.setAdapter(arrayAdapter);
+        //listViewGroups.setAdapter(arrayAdapter);
+
+        groupArrayAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, arrayListOfGroupObjects);
+        listViewGroups.setAdapter(groupArrayAdapter);
+
+        groups = FirebaseDatabase.getInstance().getReference("groups");
 
         //get logged in user
         firebaseAuth = FirebaseAuth.getInstance();
@@ -97,23 +102,42 @@ public class GroupActivity extends AppCompatActivity {
 
 
 
-
+        //any time the groups part of the db changes
         groups.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+/*
                 Set<String> set = new HashSet<String>();
                 Iterator i = dataSnapshot.getChildren().iterator();
-
+                //Set<Group> groupSet = new HashSet<Group>();
                 while(i.hasNext()){
                     set.add(((DataSnapshot)i.next()).getKey());
                     //set.add((String)dataSnapshot.child("Group Name").getValue());
                     //snapshot.child("title").getValue();
+                    //groupSet.add((Group)i.next());
                 }
                 arrayListOfGroups.clear();
                 arrayListOfGroups.addAll(set);
-
+                //arrayListOfGrouupObjects.addAll(groupSet);
+                //Log.d("mmmmmmmmmmmmmmmmmmmm", "groupset: " + groupSet);
                 arrayAdapter.notifyDataSetChanged();
+*/
+
+
+                arrayListOfGroups.clear();
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    //Group group = snapshot.getValue(Group.class);
+                    //Log.d("mmmmmmmmmmmmmmmmm", group.getGroupName());
+                    Group g = snapshot.getValue(Group.class);
+                    g.setKey((snapshot.getKey()));
+                    Log.d("mmmmmmmmmmmmmmmmmmmmm", g.getGroupName());
+                    arrayListOfGroupObjects.add(g);
+                    //Log.d("mmmmmmmmmmmmmmmmmmmmm", g.members.toString());
+                    arrayListOfGroups.add(g.getGroupName());
+
+                }
+
+                groupArrayAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -122,11 +146,13 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
+        //when an individual group is clicked
         listViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Group group = arrayListOfGroupObjects.get(position);
                 Intent intent = new Intent(getApplicationContext(), GroupHomeActivity.class);
-                intent.putExtra("groupId", ((TextView)view).getText().toString());
+                intent.putExtra("groupId", String.valueOf(group.getKey()));
                 startActivity(intent);
             }
         });
