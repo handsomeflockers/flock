@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ public class GroupHomeActivity extends AppCompatActivity {
 
     private TextView textViewHeading;
     private ListView listViewAddedMembers;
+    private Button buttonMessages;
 
     private ArrayAdapter<User> arrayAdapter;
     private ArrayList<String> arrayListOfMembersString = new ArrayList<>();
@@ -38,6 +41,7 @@ public class GroupHomeActivity extends AppCompatActivity {
     private DatabaseReference users = FirebaseDatabase.getInstance().getReference("flock-login").child("users");
 
     String groupId;
+    String groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         //set up components
         textViewHeading = (TextView) findViewById(R.id.textViewHeading);
         listViewAddedMembers = (ListView) findViewById(R.id.listViewMembersInGroup);
+        buttonMessages = (Button) findViewById(R.id.buttonMessages);
 
         //array list for added members
         arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
@@ -60,9 +65,11 @@ public class GroupHomeActivity extends AppCompatActivity {
         {
             groupId =(String) bundle.get("groupId");
             Log.d("mmmmmmmmmmmmmmm", groupId);
+            groupName =(String) bundle.get("groupName");
+            Log.d("mmmmmmmmmmmmmmm", groupName);
         }
 
-        textViewHeading.setText(groupId);
+        textViewHeading.setText(groupName);
 
         groups.child(groupId).child("members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,10 +91,18 @@ public class GroupHomeActivity extends AppCompatActivity {
 
         getUsers();
         arrayAdapter.notifyDataSetChanged();
+
+        buttonMessages.setOnClickListener(new View.OnClickListener(){
+            //go to messages
+            @Override
+            public void onClick(View view) {
+                goToMessages();
+            }
+        });
     }
 
     public void getUsers(){
-        //arrayAdapter.clear();
+        arrayListOfMembers.clear();
         users.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,5 +126,11 @@ public class GroupHomeActivity extends AppCompatActivity {
         });
 
         arrayAdapter.notifyDataSetChanged();
+    }
+
+    private void goToMessages(){
+        Intent i = new Intent(this, MessagesActivity.class);
+        i.putExtra("groupId", groupId);
+        startActivity(i);
     }
 }

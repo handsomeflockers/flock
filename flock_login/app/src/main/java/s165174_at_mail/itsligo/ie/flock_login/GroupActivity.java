@@ -153,6 +153,7 @@ public class GroupActivity extends AppCompatActivity {
                 Group group = arrayListOfGroupObjects.get(position);
                 Intent intent = new Intent(getApplicationContext(), GroupHomeActivity.class);
                 intent.putExtra("groupId", String.valueOf(group.getKey()));
+                intent.putExtra("groupName", String.valueOf(group.getGroupName()));
                 startActivity(intent);
             }
         });

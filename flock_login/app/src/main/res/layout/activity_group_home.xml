@@ -8,6 +8,11 @@
     tools:context="s165174_at_mail.itsligo.ie.flock_login.GroupHomeActivity">
 
     <TextView
+        android:background="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#fff"
         android:id="@+id/textViewHeading"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -21,4 +26,14 @@
         android:layout_height="wrap_content">
 
     </ListView>
+
+    <Button
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/buttonMessages"
+        android:text="Messages"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>
