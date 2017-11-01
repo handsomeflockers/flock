@@ -35,6 +35,7 @@ public class User {
         result.put("uid", uid);
         result.put("name", name);
         result.put("phoneNumber", phoneNumber);
+        result.put("groups", "");
 
         return result;
     }

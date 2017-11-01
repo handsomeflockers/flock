@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         final String name = editTextName.getText().toString().trim();
-        final String phoneNumber = editTextPhoneNumber.getText().toString().trim();
 
+        final String phoneNumber = editTextPhoneNumber.getText().toString().trim();
         if(TextUtils.isEmpty(email)){
             //email is empty
             Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
@@ -118,16 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(TextUtils.isEmpty(password)){
             //password is empty
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(TextUtils.isEmpty(name)){
-            //name is empty
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(TextUtils.isEmpty(phoneNumber)){
-            //phone number is empty
-            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
             return;
         }
         //if validation is ok
@@ -151,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             User user = new User(firebaseAuth.getUid(), name, phoneNumber);
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            mDatabase.child("flock-login").child("users").child(firebaseAuth.getUid()).setValue(user);
+                            //mDatabase.child("flock-login").child("users").child(firebaseAuth.getUid()).setValue(user);
 
                             //and go to group activity
                             goToGroupActivity();

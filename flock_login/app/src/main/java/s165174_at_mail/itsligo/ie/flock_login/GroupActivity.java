@@ -36,9 +36,12 @@ public class GroupActivity extends AppCompatActivity {
     private ArrayList<Group> arrayListOfGroupObjects = new ArrayList<>();
     private ArrayAdapter<Group> groupArrayAdapter;
 
+    private ArrayList<String> arrayListGroupsInUsersData = new ArrayList<>();
+
 
     //get reference to right part of database
     private DatabaseReference groups;
+    private DatabaseReference usersGroups;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -63,8 +66,10 @@ public class GroupActivity extends AppCompatActivity {
         groupArrayAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, arrayListOfGroupObjects);
         listViewGroups.setAdapter(groupArrayAdapter);
 
+        //set database routes
         groups = FirebaseDatabase.getInstance().getReference("groups");
-
+        //usersGroups = FirebaseDatabase.getInstance().getReference("flock-login/users/"+ firebaseAuth.getCurrentUser().getUid() + "/groups");
+        usersGroups = FirebaseDatabase.getInstance().getReference("flock-login/users");
         //get logged in user
         firebaseAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -77,6 +82,7 @@ public class GroupActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+                    goToMain();
                 }
                 // ...
             }
@@ -99,9 +105,55 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
+        //get the list of groups from users/uid/groups
+        //this'll allow us to retrieve only the groups associated with the current user
+        usersGroups.child(firebaseAuth.getCurrentUser().getUid()).child("groups").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //clear current array
+                arrayListGroupsInUsersData.clear();
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    //add each child value to array
+                    arrayListGroupsInUsersData.add(snapshot.getKey().toString());
+                    Log.d(TAG, "onDataChange: " + arrayListGroupsInUsersData);
+                }
+                //now we can use the groups array to retrieve each group
+                arrayListOfGroupObjects.clear();
+                for (final String group: arrayListGroupsInUsersData){
+                    groups.child("/" + group).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            // SUCCESS!
+                            Group g = snapshot.getValue(Group.class);
+                            g.setKey(group);
+                            arrayListOfGroupObjects.add(g);
+                            Log.d(TAG, "onDataChange: " + g.getGroupName());
+                            groupArrayAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                            // error callback is not called
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
+
+
+
+/*
+
+        //THIS DOESN'T LET US SET EFFECTIVE RULES IN FIREBASE
         //any time the groups part of the db changes
         groups.addValueEventListener(new ValueEventListener() {
             @Override
@@ -128,6 +180,8 @@ public class GroupActivity extends AppCompatActivity {
 
             }
         });
+*/
+
 
         //when an individual group is clicked
         listViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener(){

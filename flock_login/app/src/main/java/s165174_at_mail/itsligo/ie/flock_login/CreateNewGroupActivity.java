@@ -21,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -112,9 +113,13 @@ public class CreateNewGroupActivity extends AppCompatActivity {
                                 foundPhoneNumberUser.uid = (String) issue.child("uid").getValue();
                                 foundPhoneNumberUser.name = (String) issue.child("name").getValue();
                                 foundPhoneNumberUser.phoneNumber = (String) issue.child("phoneNumber").getValue();
-                                arrayListOfMembers.add(foundPhoneNumberUser);
+                                if (!Arrays.asList(arrayListOfMembers).contains(foundPhoneNumberUser)) {
+                                    arrayListOfMembers.add(foundPhoneNumberUser);
+                                    editTextAddPhoneNumber.setText("");
+                                }
+                                //arrayListOfMembers.add(foundPhoneNumberUser);
                                 arrayAdapter.notifyDataSetChanged();
-                                editTextAddPhoneNumber.setText("");
+                                //editTextAddPhoneNumber.setText("");
                                 Toast.makeText(getApplicationContext(), "Added "+foundPhoneNumberUser.name, Toast.LENGTH_SHORT).show();
 
                             }
@@ -160,11 +165,16 @@ public class CreateNewGroupActivity extends AppCompatActivity {
                 Log.d("mmmmmmmmmmmmmm", keyOfJustCreatedNode);
                 DatabaseReference attachUsers = groups.child(keyOfJustCreatedNode).child("members");
                 Map<String, Object> usersMap = new HashMap<String, Object>();
+                Map<String, Object> usersGroupsMap = new HashMap<String, Object>();
+                usersGroupsMap.put(keyOfJustCreatedNode, true);
                 for (User u : arrayListOfMembers) {
                     usersMap.put(u.uid, true);
                     Log.d("mmmmmmmmmmmmmm", u.uid);
                     attachUsers.updateChildren(usersMap);
+                    //need to update each member also
+                    users.child(u.uid).child("groups").updateChildren(usersGroupsMap);
                 }
+
 
                 Toast.makeText(getApplicationContext(), "Group created", Toast.LENGTH_SHORT).show();
 
