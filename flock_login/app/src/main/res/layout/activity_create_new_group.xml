@@ -8,7 +8,9 @@
     tools:context="s165174_at_mail.itsligo.ie.flock_login.CreateNewGroupActivity">
 
 
-
+        <include
+            android:id="@+id/action_bar"
+            layout="@layout/action_bar" />
         <TextView
             android:textSize="20dp"
             android:textAlignment="center"

@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     tools:context="s165174_at_mail.itsligo.ie.flock_login.MessagesActivity">
 
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar" />
     <ListView
         android:id="@+id/listViewMessages"
         android:layout_width="fill_parent"

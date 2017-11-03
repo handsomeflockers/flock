@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     tools:context="s165174_at_mail.itsligo.ie.flock_login.GroupHomeActivity">
 
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar" />
     <TextView
         android:background="@color/colorPrimaryDark"
         android:textSize="30sp"
