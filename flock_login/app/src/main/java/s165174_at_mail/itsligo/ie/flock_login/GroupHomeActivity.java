@@ -3,7 +3,11 @@ package s165174_at_mail.itsligo.ie.flock_login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,10 +47,32 @@ public class GroupHomeActivity extends AppCompatActivity {
     String groupId;
     String groupName;
 
+    //To inflate the action bar with a menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    //To add action to the Log out option on action bar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                firebaseAuth.signOut();
+                goToMain();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_home);
+
+        //To show action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
 
         //set up components
         textViewHeading = (TextView) findViewById(R.id.textViewHeading);
@@ -131,6 +157,11 @@ public class GroupHomeActivity extends AppCompatActivity {
     private void goToMessages(){
         Intent i = new Intent(this, MessagesActivity.class);
         i.putExtra("groupId", groupId);
+        startActivity(i);
+    }
+
+    private void goToMain(){
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 }

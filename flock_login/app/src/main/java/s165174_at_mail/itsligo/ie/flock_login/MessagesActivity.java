@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -45,11 +49,32 @@ public class MessagesActivity extends AppCompatActivity {
     private String TAG = "mmmmmmmmmmmmm";
     User u;
 
+    //To inflate the action bar with a menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    //To add action to the Log out option on action bar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                firebaseAuth.signOut();
+                goToMain();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
+
+        //To show action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
 
         //get the user
         firebaseAuth = FirebaseAuth.getInstance();
@@ -157,5 +182,9 @@ public class MessagesActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void goToMain(){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }

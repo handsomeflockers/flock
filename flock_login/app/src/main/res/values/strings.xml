@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">flock_login</string>
+    <string name="app_name">Flock</string>
+    <string name="setting_name">Log Out</string>
+    <string name="flock_name">Flock</string>
 </resources>

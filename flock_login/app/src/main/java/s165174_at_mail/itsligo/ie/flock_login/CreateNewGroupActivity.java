@@ -3,8 +3,12 @@ package s165174_at_mail.itsligo.ie.flock_login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,10 +53,32 @@ public class CreateNewGroupActivity extends AppCompatActivity {
 
     private User creator;
 
+    //To inflate the action bar with a menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    //To add action to the Log out option on action bar menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                firebaseAuth.signOut();
+                goToMain();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_group);
+
+        //To show action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
 
         buttonAddGroup = (Button) findViewById(R.id.buttonCreateGroup);
         buttonAddNumber = (Button) findViewById(R.id.buttonAddNumber);
@@ -191,5 +217,8 @@ public class CreateNewGroupActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-
+    private void goToMain(){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
 }
