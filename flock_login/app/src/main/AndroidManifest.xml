@@ -21,7 +21,8 @@
         <activity android:name=".GroupActivity" />
         <activity android:name=".CreateNewGroupActivity" />
         <activity android:name=".GroupHomeActivity" />
-        <activity android:name=".MessagesActivity"></activity>
+        <activity android:name=".MessagesActivity" />
+        <activity android:name=".AddMemberToExistingGroupActivity"></activity>
     </application>
 
 </manifest>

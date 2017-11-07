@@ -29,6 +29,7 @@ public class GroupHomeActivity extends AppCompatActivity {
     private TextView textViewHeading;
     private ListView listViewAddedMembers;
     private Button buttonMessages;
+    private Button buttonAddMember;
 
     private ArrayAdapter<User> arrayAdapter;
     private ArrayList<String> arrayListOfMembersString = new ArrayList<>();
@@ -78,6 +79,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         textViewHeading = (TextView) findViewById(R.id.textViewHeading);
         listViewAddedMembers = (ListView) findViewById(R.id.listViewMembersInGroup);
         buttonMessages = (Button) findViewById(R.id.buttonMessages);
+        buttonAddMember = (Button) findViewById(R.id.buttonAddMember);
 
         //array list for added members
         arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
@@ -125,7 +127,15 @@ public class GroupHomeActivity extends AppCompatActivity {
                 goToMessages();
             }
         });
+        buttonAddMember.setOnClickListener(new View.OnClickListener(){
+            //go to messages
+            @Override
+            public void onClick(View view) {
+                HandleAddMembers();
+            }
+        });
     }
+
 
     public void getUsers(){
         arrayListOfMembers.clear();
@@ -163,5 +173,13 @@ public class GroupHomeActivity extends AppCompatActivity {
     private void goToMain(){
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+    }
+
+    private void HandleAddMembers(){
+        Intent i = new Intent(this, AddMemberToExistingGroupActivity.class);
+        i.putExtra("groupId", groupId);
+        i.putExtra("groupName", groupName);
+        startActivity(i);
+
     }
 }
