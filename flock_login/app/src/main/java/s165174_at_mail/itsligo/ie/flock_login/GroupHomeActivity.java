@@ -1,7 +1,9 @@
 package s165174_at_mail.itsligo.ie.flock_login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -62,6 +64,11 @@ public class GroupHomeActivity extends AppCompatActivity {
             case R.id.action_settings:
                 firebaseAuth.signOut();
                 goToMain();
+                break;
+            case R.id.action_leave_group:
+                Log.d("mmmmmmmmmmmmmmmm", "onOptionsItemSelected: ");
+                leaveGroupHandler();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -88,6 +95,8 @@ public class GroupHomeActivity extends AppCompatActivity {
 
         Intent intent= getIntent();
         Bundle bundle = intent.getExtras();
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         if(bundle != null)
         {
@@ -175,11 +184,44 @@ public class GroupHomeActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void goToGroups(){
+        Intent i = new Intent(this, GroupActivity.class);
+        startActivity(i);
+    }
+
     private void HandleAddMembers(){
         Intent i = new Intent(this, AddMemberToExistingGroupActivity.class);
         i.putExtra("groupId", groupId);
         i.putExtra("groupName", groupName);
         startActivity(i);
+    }
 
+    private void leaveGroupHandler(){
+        Log.d("mmmmmmmmmmmmm", "leaveGroup: method");
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        leaveGroup();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
+    private void leaveGroup(){
+        groups.child(groupId).child("members").child(firebaseAuth.getUid()).removeValue();
+        users.child(firebaseAuth.getUid()).child("groups").child(groupId).removeValue();
+        goToGroups();
     }
 }

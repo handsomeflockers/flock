@@ -19,6 +19,7 @@
         android:id="@+id/textViewHeading"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@+id/action_bar"
         android:text=""
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -26,7 +27,7 @@
         android:layout_below="@+id/textViewHeading"
         android:id="@+id/listViewMembersInGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="290dp">
 
     </ListView>
 
@@ -35,7 +36,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"
         android:text="Add member to group"
-        android:layout_toRightOf="@+id/buttonMessages"
+        android:layout_toLeftOf="@+id/buttonMessages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
