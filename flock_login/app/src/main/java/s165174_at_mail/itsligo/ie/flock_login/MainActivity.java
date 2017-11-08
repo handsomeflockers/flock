@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //String iid = InstanceID.getInstance();
+        String token = FirebaseInstanceId.getInstance().getToken();
 
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //mDatabase.child("flock-login").child("users").child(firebaseAuth.getUid()).setValue(user);
 
                             //and go to group activity
+
                             goToGroupActivity();
 
 

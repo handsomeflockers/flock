@@ -23,8 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 //gjhkl
 public class GroupActivity extends AppCompatActivity {
@@ -105,6 +108,7 @@ public class GroupActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -113,6 +117,11 @@ public class GroupActivity extends AppCompatActivity {
                 // ...
             }
         };
+
+        //ensure token is up-to-date
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", FirebaseInstanceId.getInstance().getToken());
+        usersGroups.child(firebaseAuth.getCurrentUser().getUid()).updateChildren(map);
 
         buttonAddGroup.setOnClickListener(new View.OnClickListener(){
             @Override

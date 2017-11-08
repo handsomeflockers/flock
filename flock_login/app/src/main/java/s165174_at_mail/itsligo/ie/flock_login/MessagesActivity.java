@@ -1,9 +1,13 @@
 package s165174_at_mail.itsligo.ie.flock_login;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -14,9 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RemoteViews;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +34,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MessagesActivity extends AppCompatActivity {
+
+    //notification - related
+    private NotificationCompat.Builder builder;
+    private NotificationManager notificationManager;
+    private int notification_id;
+    private RemoteViews remoteViews;
+    private Context context;
 
 
     //set up variables
@@ -71,6 +84,13 @@ public class MessagesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
+
+        context = this;
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        remoteViews = new RemoteViews(getPackageName(),R.layout.custom_notification_messages);
+
+        remoteViews.setImageViewResource(R.id.notification_icon, R.mipmap.ic_launcher);
+        //remoteViews.setTextViewText(R.id.notification_text, "New MESSAGES");
 
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
@@ -119,16 +139,36 @@ public class MessagesActivity extends AppCompatActivity {
             }
         });
 
+        /*
+        //this might not be a good way to retrieve the messages
         root.child("messages").child(groupId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: ");
+
+                Boolean notified = false;
 
                 arrayMessages.clear();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                     Message m = snapshot.getValue(Message.class);
                     Log.d(TAG, "onDataChange: " + m.getMessage());
                     arrayMessages.add(m);
+                    if (notified = false){
+                        Log.d(TAG, "notified = false");
+                        //don't want to send notification for every single message each time
+                        Intent notificaation_intent = new Intent(context, MessagesActivity.class);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificaation_intent, 0);
+
+                        builder = new NotificationCompat.Builder(context);
+                        builder.setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle(m.getSender())
+                                .setContentText(m.getMessage())
+                                .setAutoCancel(true)
+                                .setCustomContentView(remoteViews)
+                                .setContentIntent(pendingIntent);
+                        notificationManager.notify((int)System.currentTimeMillis(), builder.build());
+                        notified = true;
+                    }
                 }
 
                 arrayAdapter.notifyDataSetChanged();
@@ -139,10 +179,76 @@ public class MessagesActivity extends AppCompatActivity {
 
             }
         });
+*/
+
+
+
+
+        //new method of getting messages
+
+        root.child("messages").child(groupId).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                appendChat(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                appendChat(dataSnapshot);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
 
         getUserDetails();
 
     }//end oncreate
+
+
+    private void appendChat(DataSnapshot ds){
+        Message m = ds.getValue(Message.class);
+        Log.d(TAG, "onDataChange: " + m.getMessage());
+        arrayMessages.add(m);
+        arrayAdapter.notifyDataSetChanged();
+        sendMessageNotification(m);
+    }
+
+    public void sendMessageNotification(Message m){
+        remoteViews.setTextViewText(R.id.notification_text, m.getSender() + ": " + m.getMessage());
+        Intent notification_intent = new Intent(context, MessagesActivity.class);
+        notification_intent.putExtra("groupId", groupId);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notification_intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notification_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder = new NotificationCompat.Builder(context);
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(m.getSender())
+                .setContentText(m.getMessage())
+                .setAutoCancel(true)
+                .setCustomContentView(remoteViews)
+                .setContentIntent(pendingIntent);
+        notificationManager.notify((int)System.currentTimeMillis(), builder.build());
+    }
+
 
     private void sendMessage(){
         Log.d(TAG, "sendMessage: ");
