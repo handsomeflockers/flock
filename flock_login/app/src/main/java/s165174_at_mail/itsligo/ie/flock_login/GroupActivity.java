@@ -16,8 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,7 +56,7 @@ public class GroupActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private static final String TAG = "GroupActivity";
+    private static final String TAG = "mmmmmmmmmmmmmmm";
 
     //To inflate the action bar with a menu
     @Override
@@ -78,6 +81,9 @@ public class GroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
+        Log.d(TAG, "onCreate: CURRENTLY IN ONCREATE");
+
+
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
@@ -95,10 +101,32 @@ public class GroupActivity extends AppCompatActivity {
         groupArrayAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, arrayListOfGroupObjects);
         listViewGroups.setAdapter(groupArrayAdapter);
 
+        usersGroups = FirebaseDatabase.getInstance().getReference("flock-login/users");
+
+        //send token to db (for receiving notifications)
+        final FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mUser != null) {
+            mUser.getToken(true)
+                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                            if (task.isSuccessful()) {
+                                String idToken = task.getResult().getToken();
+                                Log.d(TAG, "token = " + idToken);
+                                Map<String, Object> map = new HashMap<String, Object>();
+                                //map.put("token", idToken);
+                                map.put("token", FirebaseInstanceId.getInstance().getToken());
+                                usersGroups.child(mUser.getUid()).child("token").setValue(map);
+                            } else {
+                                Log.d(TAG, "no token");
+                            }
+                        }
+                    });
+        }
+
         //set database routes
         groups = FirebaseDatabase.getInstance().getReference("groups");
         //usersGroups = FirebaseDatabase.getInstance().getReference("flock-login/users/"+ firebaseAuth.getCurrentUser().getUid() + "/groups");
-        usersGroups = FirebaseDatabase.getInstance().getReference("flock-login/users");
+
         //get logged in user
         firebaseAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {

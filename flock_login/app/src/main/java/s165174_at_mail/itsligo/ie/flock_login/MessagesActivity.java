@@ -246,7 +246,7 @@ public class MessagesActivity extends AppCompatActivity {
                 .setAutoCancel(true)
                 .setCustomContentView(remoteViews)
                 .setContentIntent(pendingIntent);
-        notificationManager.notify((int)System.currentTimeMillis(), builder.build());
+       //notificationManager.notify((int)System.currentTimeMillis(), builder.build());
     }
 
 
