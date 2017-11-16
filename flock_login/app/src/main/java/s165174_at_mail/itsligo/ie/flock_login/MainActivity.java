@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        textViewLoggedInUser = (TextView) findViewById(R.id.textViewLoggedInUser);
+        //textViewLoggedInUser = (TextView) findViewById(R.id.textViewLoggedInUser);
 
         //-----------------------------------------------
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -65,13 +65,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    textViewLoggedInUser.setText(user.getEmail() + " is logged in");
+                    //textViewLoggedInUser.setText(user.getEmail() + " is logged in");
                     //because user is logged in, go to group activity
                     goToGroupActivity();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    textViewLoggedInUser.setText("Nobody logged in");
+                    //textViewLoggedInUser.setText("Nobody logged in");
                 }
                 // ...
             }
@@ -87,17 +87,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextPhoneNumber = (EditText) findViewById(R.id.editTextPhoneNumber);
 
         textViewSignin = (TextView) findViewById(R.id.textViewSignin);
-        textViewLogout = (TextView) findViewById(R.id.textViewLogout);
+        //textViewLogout = (TextView) findViewById(R.id.textViewLogout);
 
 
         buttonRegister.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
-        textViewLogout.setOnClickListener(this);
+        //textViewLogout.setOnClickListener(this);
 
     }
 
     private void goToGroupActivity(){
         Intent intent = new Intent(MainActivity.this, GroupActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToLogin(){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -225,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(view == textViewSignin){
-            signInExistingUser();
+            goToLogin();
         }
 
         if(view == textViewLogout){

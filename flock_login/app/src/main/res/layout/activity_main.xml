@@ -139,20 +139,6 @@
             android:text="Already registered? Login here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            android:id="@+id/textViewLoggedInUser"
-            android:layout_margin="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_margin="15dp"
-            android:textAlignment="center"
-            android:id="@+id/textViewLogout"
-            android:text="Logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 //
 
