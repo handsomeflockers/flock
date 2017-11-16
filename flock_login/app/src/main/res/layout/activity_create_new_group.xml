@@ -14,7 +14,7 @@
         <TextView
             android:textSize="20dp"
             android:textAlignment="center"
-            android:text="Create a new group"
+            android:text=""
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/textView"

@@ -76,18 +76,6 @@ public class AddMemberToExistingGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_member_to_existing_group);
 
-        //To show action bar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
-        setSupportActionBar(toolbar);
-
-        buttonDone = (Button) findViewById(R.id.buttonFinished);
-        buttonAddNumber = (Button) findViewById(R.id.buttonAddNumber);
-        editTextAddPhoneNumber = (EditText) findViewById(R.id.editTextAddPhoneNumber);
-        listViewAddedMembers = (ListView) findViewById(R.id.listViewAddedMembers);
-
-        //get logged in user
-        firebaseAuth = FirebaseAuth.getInstance();
-
         //get info from previous activity
         Intent intent= getIntent();
         Bundle bundle = intent.getExtras();
@@ -97,6 +85,19 @@ public class AddMemberToExistingGroupActivity extends AppCompatActivity {
             groupName = (String) bundle.get("groupName");
             Log.d("mmmmmmmmmmmmmmm", groupId);
         }
+
+        //To show action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add people to your group");
+
+        buttonDone = (Button) findViewById(R.id.buttonFinished);
+        buttonAddNumber = (Button) findViewById(R.id.buttonAddNumber);
+        editTextAddPhoneNumber = (EditText) findViewById(R.id.editTextAddPhoneNumber);
+        listViewAddedMembers = (ListView) findViewById(R.id.listViewAddedMembers);
+
+        //get logged in user
+        firebaseAuth = FirebaseAuth.getInstance();
 
         //link array to listview
         arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);

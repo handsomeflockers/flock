@@ -79,6 +79,7 @@ public class CreateNewGroupActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Create a new group");
 
         buttonAddGroup = (Button) findViewById(R.id.buttonCreateGroup);
         buttonAddNumber = (Button) findViewById(R.id.buttonAddNumber);

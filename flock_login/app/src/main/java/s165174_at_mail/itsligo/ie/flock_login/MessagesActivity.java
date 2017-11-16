@@ -95,6 +95,7 @@ public class MessagesActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Messages");
 
         //get the user
         firebaseAuth = FirebaseAuth.getInstance();

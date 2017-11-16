@@ -36,7 +36,7 @@ import java.util.Map;
 public class GroupActivity extends AppCompatActivity {
 
     private Button buttonAddGroup;
-    private Button buttonLogout;
+    //private Button buttonLogout;
     private EditText editTextAddGroupName;
     private ListView listViewGroups;
 
@@ -87,10 +87,11 @@ public class GroupActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("My Groups");
 
 
         buttonAddGroup = (Button) findViewById(R.id.buttonAddGroup);
-        buttonLogout= (Button) findViewById(R.id.buttonLogout);
+        //buttonLogout= (Button) findViewById(R.id.buttonLogout);
         editTextAddGroupName = (EditText) findViewById(R.id.editTextGroupName);
         listViewGroups = (ListView) findViewById(R.id.listViewGroups);
 
@@ -160,13 +161,13 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-        buttonLogout.setOnClickListener(new View.OnClickListener(){
+        /*buttonLogout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 firebaseAuth.signOut();
                 goToMain();
             }
-        });
+        });*/
 
         //get the list of groups from users/uid/groups
         //this'll allow us to retrieve only the groups associated with the current user
