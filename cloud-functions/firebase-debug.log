@@ -1,0 +1,57 @@
+[debug] [2017-11-18T10:47:36.480Z] ----------------------------------------------------------------------
+[debug] [2017-11-18T10:47:36.497Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\markm\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-11-18T10:47:36.500Z] CLI Version:   3.14.0
+[debug] [2017-11-18T10:47:36.500Z] Platform:      win32
+[debug] [2017-11-18T10:47:36.501Z] Node Version:  v6.10.1
+[debug] [2017-11-18T10:47:36.505Z] Time:          Sat Nov 18 2017 10:47:36 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:47:36.505Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-18T10:47:36.589Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-18T10:47:36.595Z] > authorizing via signed-in user
+[debug] [2017-11-18T10:47:36.612Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/flock-login  
+ Sat Nov 18 2017 10:47:36 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:47:37.514Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-18T10:47:37.519Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/flock-login/tokens  
+ Sat Nov 18 2017 10:47:37 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:47:38.215Z] <<< HTTP RESPONSE 200
+[info] 1
+[info] 
+[info] === Deploying to 'flock-login'...
+[info] 
+[info] i  deploying functions
+[debug] [2017-11-18T10:47:39.661Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase serve --only functions",
+    "shell": "firebase experimental:functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "firebase-admin": "^5.4.3",
+    "firebase-functions": "^0.7.1"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] [2017-11-18T10:47:39.674Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/flock-login?view=CONSUMER_VIEW  
+ Sat Nov 18 2017 10:47:39 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:47:39.676Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/flock-login?view=CONSUMER_VIEW  
+ Sat Nov 18 2017 10:47:39 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:47:40.766Z] <<< HTTP RESPONSE 200
+[info] +  runtimeconfig: all necessary APIs are enabled
+[debug] [2017-11-18T10:47:41.465Z] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] [2017-11-18T10:47:42.433Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/flock-login  
+ Sat Nov 18 2017 10:47:42 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:47:42.436Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/flock-login/apiKeys  
+ Sat Nov 18 2017 10:47:42 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:47:43.357Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-18T10:47:43.520Z] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2017-11-18T10:50:07.648Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/flock-login/configs  
+ Sat Nov 18 2017 10:50:07 GMT+0000 (GMT Standard Time)
+[debug] [2017-11-18T10:50:07.940Z] <<< HTTP RESPONSE 200

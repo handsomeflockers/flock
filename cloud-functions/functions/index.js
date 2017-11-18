@@ -24,8 +24,8 @@ exports.sendNotification = functions.database.ref('/messages/{groupId}/{pushId}'
           console.log('snap = ' + snap);
           //we'll save them in uids
           const uids = Object.keys(snap.val());
-          console.log('uids = ' + uids);
-          console.log('uids[0] = ' + uids[0])
+          //console.log('uids = ' + uids);
+          //console.log('uids[0] = ' + uids[0])
           //and then we return uids
           return uids;
         }).then(uids =>{
@@ -34,14 +34,15 @@ exports.sendNotification = functions.database.ref('/messages/{groupId}/{pushId}'
             console.log('uid in forEach = ' + uid);
             const getDeviceTokensPromise = admin.database().ref(`/flock-login/users/${uid}/token`).once('value')
             .then(snaps => {
-              console.log('in');
               const tok = snaps.val().token;
               console.log('tok =' + tok);
+              //notification payload
               const payload = {
                   notification: {
                       title: sender,
                       body: text,
-                      icon: sender
+                      sound: "default",
+                      vibrate: "default"
                   }
               };
               admin.messaging().sendToDevice(tok, payload)
