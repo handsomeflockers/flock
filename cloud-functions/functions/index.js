@@ -4,10 +4,20 @@ admin.initializeApp(functions.config().firebase);
 
 exports.sendNotification = functions.database.ref('/messages/{groupId}/{pushId}')
     .onWrite(event => {
+
+        //this function is for sending notifications to phones whenever 
+        //a message is added to a group relevant to that phone's user
+
+        //TODO - NOTIFICATIONS DOIN'T APPEAR ON SENDER'S PHONE
+        //TODO - COMBINE NOTIFICATIONS
+        //TODO - NOTIFICATION ICONS
+
+        
         const message = event.data.current.val();
         const groupId = event.params.groupId;
         const sender = message.sender;
         const text = message.message;
+        const senderUid = message.uid;
         const promises = [];
         console.log('sender = ' + sender);
         console.log('text = ' + text);
@@ -18,14 +28,19 @@ exports.sendNotification = functions.database.ref('/messages/{groupId}/{pushId}'
         //We have the groupId
         //Now we need the uids of the members of that groups
         const groupMembersPromise = admin.database().ref(`/groups/${groupId}/members`).once('value');
-        //returns a promise, so let's set code for when that's returned
+        //we also want the uid of the sender
+        //const senderUidPromise = admin.database().ref(`/flock-login/users`).orderByChild('name').equalTo(sender).once('value')
+        //returns a promise, so set code for when that's returned
         //we want to use the uids to access the rtdb and retrieve the users' tokens
         groupMembersPromise.then(snap => {
           console.log('snap = ' + snap);
           //we'll save them in uids
           const uids = Object.keys(snap.val());
-          //console.log('uids = ' + uids);
-          //console.log('uids[0] = ' + uids[0])
+          //then, we need to remove the sender's uid, so the sender doesn't get a notification
+          var index = uids.indexOf(senderUid);
+          if (index > -1) {
+            uids.splice(index, 1);
+          }
           //and then we return uids
           return uids;
         }).then(uids =>{
@@ -41,10 +56,12 @@ exports.sendNotification = functions.database.ref('/messages/{groupId}/{pushId}'
                   notification: {
                       title: sender,
                       body: text,
+                      icon: "default",
                       sound: "default",
                       vibrate: "default"
                   }
               };
+              //then, send to each device we have a token for
               admin.messaging().sendToDevice(tok, payload)
                   .then(function (response) {
                       console.log("Successfully sent message:", JSON.stringify(response));

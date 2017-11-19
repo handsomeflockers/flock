@@ -182,7 +182,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         //notificationBuilder.setDefaults(-1);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify((int)System.currentTimeMillis(), notificationBuilder.build());
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
         r.play();

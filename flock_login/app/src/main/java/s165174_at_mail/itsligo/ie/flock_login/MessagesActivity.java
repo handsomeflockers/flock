@@ -257,15 +257,15 @@ public class MessagesActivity extends AppCompatActivity {
         if(!msg.equals("")){
             //if msg isn't empty
             //create new message
-            Message m = new Message(u.name, msg);
+            Message m = new Message(u.name, msg, u.uid);
             //get its map
             Map<String, Object> mValues = m.toMap();
             Map<String, Object> childUpdates = new HashMap<>();
-            childUpdates.put("/messages/" + groupId + "/", mValues);
+            //childUpdates.put("/messages/" + groupId + "/", mValues);
             //make the update
             //root.child("message").child(groupId).updateChildren(childUpdates);
             //root.updateChildren(childUpdates);
-            root.child("messages").child(groupId).push().setValue(m);
+            root.child("messages").child(groupId).push().setValue(m.toMap());
             editTextMessage.setText("");
         }
     }

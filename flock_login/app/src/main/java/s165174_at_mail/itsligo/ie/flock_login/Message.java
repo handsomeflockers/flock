@@ -13,12 +13,20 @@ public class Message {
     private String  sender;
     private String message;
     private Long timestamp;
+    private String uid;
     public Message() {
         // empty default constructor, necessary for Firebase to be able to deserialize posts
     }
     public Message(String sender, String message){
         this.sender = sender;
         this.message = message;
+        this.timestamp = System.currentTimeMillis()/1000;
+    }
+
+    public Message(String sender, String message, String uid){
+        this.sender = sender;
+        this.message = message;
+        this.uid = uid;
         this.timestamp = System.currentTimeMillis()/1000;
     }
 
@@ -44,6 +52,7 @@ public class Message {
         result.put("sender", sender);
         result.put("message", message);
         result.put("timestamp", timestamp);
+        result.put("uid", uid);
         return result;
     }
 
