@@ -169,7 +169,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_stat_name)
                         .setContentTitle("FCM Message")
                         .setContentText(messageBody)
                         .setAutoCancel(true)
@@ -177,12 +177,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setVibrate(new long[] {1000, 1000, 1000, 1000, 1000})
                         .setContentIntent(pendingIntent);
 
+
+
+
+
+
+
+
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         //notificationBuilder.setDefaults(-1);
 
-        notificationManager.notify((int)System.currentTimeMillis(), notificationBuilder.build());
+        notificationManager.notify(1, notificationBuilder.build());
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
         r.play();

@@ -56,7 +56,7 @@ exports.sendNotification = functions.database.ref('/messages/{groupId}/{pushId}'
                   notification: {
                       title: sender,
                       body: text,
-                      icon: "default",
+                      icon: "ic_stat_name",
                       sound: "default",
                       vibrate: "default"
                   }
