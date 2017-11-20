@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/setting_name"></item>
+    <item
+        android:id="@+id/action_leave_group"
+        android:title="Leave Group"></item>
+    <item
+        android:id="@+id/action_add_member_to_group"
+        android:title="Add New Member"></item>
+</menu>
