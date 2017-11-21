@@ -31,7 +31,7 @@ public class GroupHomeActivity extends AppCompatActivity {
     private TextView textViewHeading;
     private ListView listViewAddedMembers;
     private Button buttonMessages;
-    private Button buttonAddMember;
+    //private Button buttonAddMember;
 
     private ArrayAdapter<User> arrayAdapter;
     private ArrayList<String> arrayListOfMembersString = new ArrayList<>();
@@ -54,7 +54,7 @@ public class GroupHomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_group_home, menu);
         return super.onCreateOptionsMenu(menu);
     }
     //To add action to the Log out option on action bar menu
@@ -68,6 +68,9 @@ public class GroupHomeActivity extends AppCompatActivity {
             case R.id.action_leave_group:
                 Log.d("mmmmmmmmmmmmmmmm", "onOptionsItemSelected: ");
                 leaveGroupHandler();
+                break;
+            case R.id.action_add_member_to_group:
+                HandleAddMembers();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -86,7 +89,6 @@ public class GroupHomeActivity extends AppCompatActivity {
         textViewHeading = (TextView) findViewById(R.id.textViewHeading);
         listViewAddedMembers = (ListView) findViewById(R.id.listViewMembersInGroup);
         buttonMessages = (Button) findViewById(R.id.buttonMessages);
-        buttonAddMember = (Button) findViewById(R.id.buttonAddMember);
 
         //array list for added members
         arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
@@ -111,6 +113,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         groups.child(groupId).child("members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                arrayListOfMembers.clear();
                 Log.d("mmmmmmmmmmmmmmmm", snapshot.toString());
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     String ps = (String)postSnapshot.getKey();
@@ -136,13 +139,13 @@ public class GroupHomeActivity extends AppCompatActivity {
                 goToMessages();
             }
         });
-        buttonAddMember.setOnClickListener(new View.OnClickListener(){
+        /*buttonAddMember.setOnClickListener(new View.OnClickListener(){
             //go to messages
             @Override
             public void onClick(View view) {
                 HandleAddMembers();
             }
-        });
+        });*/
     }
 
 
