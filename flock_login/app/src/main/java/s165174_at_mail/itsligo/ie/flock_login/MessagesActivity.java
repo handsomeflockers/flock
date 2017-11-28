@@ -5,24 +5,20 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,10 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class MessagesActivity extends AppCompatActivity {
 
@@ -131,7 +124,6 @@ public class MessagesActivity extends AppCompatActivity {
 
         //array list for added members
         arrayAdapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, arrayMessages);
-        //listViewMessages.setAdapter(arrayAdapter);
         MessageAdapter messageAdapter = new MessageAdapter(this, R.layout.message_layout, arrayMessages);
         listViewMessages.setAdapter(messageAdapter);
 
@@ -241,7 +233,7 @@ public class MessagesActivity extends AppCompatActivity {
         Log.d(TAG, "onDataChange: " + m.getMessage());
         arrayMessages.add(m);
         arrayAdapter.notifyDataSetChanged();
-        sendMessageNotification(m);
+        //sendMessageNotification(m);
     }
 
     public void sendMessageNotification(Message m){
@@ -272,10 +264,7 @@ public class MessagesActivity extends AppCompatActivity {
             //get its map
             Map<String, Object> mValues = m.toMap();
             Map<String, Object> childUpdates = new HashMap<>();
-            //childUpdates.put("/messages/" + groupId + "/", mValues);
             //make the update
-            //root.child("message").child(groupId).updateChildren(childUpdates);
-            //root.updateChildren(childUpdates);
             root.child("messages").child(groupId).push().setValue(m.toMap());
             editTextMessage.setText("");
         }
@@ -287,11 +276,6 @@ public class MessagesActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: ");
                 u = dataSnapshot.getValue(User.class);
-                /*for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: " + snapshot);
-                    u = snapshot.getValue(User.class);
-                    Log.d(TAG, "onDataChange: " + u.toString());
-                }*/
             }
 
             @Override
@@ -310,33 +294,3 @@ public class MessagesActivity extends AppCompatActivity {
 }
 
 
-class MessageAdapter extends ArrayAdapter {
-
-    public List<Message> messageList;
-    private int resource;
-    private LayoutInflater inflater;
-
-    public MessageAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List objects) {
-        super(context, resource, objects);
-        messageList = objects;
-        this.resource = resource;
-        inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-    }
-    public View getView(int position, View convertView, ViewGroup parent){
-
-        if(convertView == null){
-            convertView = inflater.inflate(R.layout.message_layout, null);
-        }
-
-        TextView textViewSender;
-        TextView textViewMessage;
-
-        textViewSender = (TextView) convertView.findViewById(R.id.textViewSender);
-        textViewMessage = (TextView) convertView.findViewById(R.id.textViewMessage);
-
-        textViewSender.setText(messageList.get(position).getSender());
-        textViewMessage.setText(messageList.get(position).getMessage());
-
-        return convertView;
-    }
-}

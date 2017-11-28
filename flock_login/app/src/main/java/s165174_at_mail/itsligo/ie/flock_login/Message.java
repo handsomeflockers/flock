@@ -42,6 +42,8 @@ public class Message {
         return sender;
     }
 
+    public String getUid(){ return uid; }
+
     public Long getTimestamp(){
         return timestamp;
     }
