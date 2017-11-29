@@ -31,6 +31,7 @@ public class GroupHomeActivity extends AppCompatActivity {
     private TextView textViewHeading;
     private ListView listViewAddedMembers;
     private Button buttonMessages;
+    private Button buttonShoppingList;
     //private Button buttonAddMember;
 
     private ArrayAdapter<User> arrayAdapter;
@@ -89,6 +90,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         textViewHeading = (TextView) findViewById(R.id.textViewHeading);
         listViewAddedMembers = (ListView) findViewById(R.id.listViewMembersInGroup);
         buttonMessages = (Button) findViewById(R.id.buttonMessages);
+        buttonShoppingList = (Button) findViewById(R.id.buttonShoppingList);
 
         //array list for added members
         arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
@@ -139,13 +141,14 @@ public class GroupHomeActivity extends AppCompatActivity {
                 goToMessages();
             }
         });
-        /*buttonAddMember.setOnClickListener(new View.OnClickListener(){
+
+        buttonShoppingList.setOnClickListener(new View.OnClickListener(){
             //go to messages
             @Override
             public void onClick(View view) {
-                HandleAddMembers();
+                goToShoppingList();
             }
-        });*/
+        });
     }
 
 
@@ -178,6 +181,12 @@ public class GroupHomeActivity extends AppCompatActivity {
 
     private void goToMessages(){
         Intent i = new Intent(this, MessagesActivity.class);
+        i.putExtra("groupId", groupId);
+        startActivity(i);
+    }
+
+    private void goToShoppingList(){
+        Intent i = new Intent(this, ShoppingListActivity.class);
         i.putExtra("groupId", groupId);
         startActivity(i);
     }

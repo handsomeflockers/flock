@@ -41,4 +41,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:layout_margin="15dp"
+        android:layout_above="@+id/buttonMessages"
+        android:id="@+id/buttonShoppingList"
+        android:text="Shopping List"
+        android:textColor="#ffffff"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="s165174_at_mail.itsligo.ie.flock_login.ShoppingListActivity">
+
+
+    <include
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar" />
+
+    <ListView
+        android:id="@+id/listViewShoppingListItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listFooter"
+        android:transcriptMode="alwaysScroll"
+        android:layout_below="@+id/action_bar"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"/> />
+
+    <LinearLayout
+        android:id="@+id/listFooter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextAddItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:maxLines="1" />
+
+        <Button
+            android:id="@+id/buttonAddItem"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Add"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
