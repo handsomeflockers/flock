@@ -25,8 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static s165174_at_mail.itsligo.ie.flock_login.R.id.buttonAddItem;
 
@@ -135,22 +133,23 @@ public class ShoppingListActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                //appendShoppingList(dataSnapshot);
+                //see changeList(dataSnapshot);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                //when we get to removing items after a certain amount of time,
+                //we need to sort this part out
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                //I don't think we'll need this
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                //gotta pop up a toast here
             }
         });
 
@@ -158,6 +157,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
 
     private void appendShoppingList(DataSnapshot ds){
+        //add new item to shopping list arraylist
         ShoppingListItem i = ds.getValue(ShoppingListItem.class);
         i.setKey(ds.getKey());
         i.setGroupId(groupId);
@@ -166,7 +166,15 @@ public class ShoppingListActivity extends AppCompatActivity {
         arrayAdapter.notifyDataSetChanged();
     }
 
+    private void changeList(DataSnapshot ds){
+        //this needs to reflect changes made on other devices
+        //basically, if a user ticks or unticks a checkbox item,
+        //we need to update it here - preferably without loading
+        //every item from the db again
+    }
+
     private void getUserDetails(){
+        //who is logged in?
         root.child("flock-login").child("users").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -186,12 +194,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         Log.d(TAG, "addItem: ");
         String item = editTextAddItem.getText().toString();
         if(!item.equals("")){
-            //if msg isn't empty
-            //create new message
+            //if item isn't empty
+            //create new item
             ShoppingListItem i = new ShoppingListItem(u.name, item, u.uid);
             //get its map
-            Map<String, Object> mValues = i.toMap();
-            Map<String, Object> childUpdates = new HashMap<>();
             //make the update
             root.child("shoppingList").child(groupId).push().setValue(i.toMap());
             editTextAddItem.setText("");

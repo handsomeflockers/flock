@@ -57,6 +57,7 @@ public class MessageAdapter extends ArrayAdapter {
         if(firebaseAuth.getCurrentUser().getUid().equals(messageList.get(position).getUid())){
             //sender uid is logged in user uid
             textViewSender.setText("");
+            textViewMessage.setTextColor(Color.parseColor("#FF4081"));
             linLayout.setBackgroundColor(Color.parseColor("#9be7fc"));
             linLayout.setGravity(Gravity.RIGHT);
         }else if(messageList.get(position).getSender().equals("FLOCK")){
@@ -70,7 +71,7 @@ public class MessageAdapter extends ArrayAdapter {
             textViewSender.setText(messageList.get(position).getSender());
             linLayout.setBackgroundColor(Color.parseColor("#ffffff"));
             linLayout.setGravity(Gravity.LEFT);
-            textViewSender.setTextColor(Color.parseColor("#FF4081"));
+            textViewSender.setTextColor(Color.parseColor("#0691b8"));
         }
 
         return convertView;
