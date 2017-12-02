@@ -164,6 +164,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         Log.d(TAG, "onDataChange: " + i.getKey());
         arrayItems.add(i);
         arrayAdapter.notifyDataSetChanged();
+        listViewItems.setSelection(arrayAdapter.getCount() - 1);
     }
 
     private void changeList(DataSnapshot ds){

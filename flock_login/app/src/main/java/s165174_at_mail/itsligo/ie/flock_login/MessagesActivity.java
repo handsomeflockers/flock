@@ -234,6 +234,7 @@ public class MessagesActivity extends AppCompatActivity {
         arrayMessages.add(m);
         arrayAdapter.notifyDataSetChanged();
         //sendMessageNotification(m);
+        listViewMessages.setSelection(arrayAdapter.getCount() - 1);
     }
 
     public void sendMessageNotification(Message m){
