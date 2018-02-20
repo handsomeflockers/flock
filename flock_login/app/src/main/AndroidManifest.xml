@@ -53,7 +53,11 @@
             android:resource="@color/colorAccent" />
 
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ShoppingListActivity"></activity>
+        <activity android:name=".ShoppingListActivity" />
+        <activity
+            android:name=".TaskListActivity"
+            android:label="@string/title_activity_task_list"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

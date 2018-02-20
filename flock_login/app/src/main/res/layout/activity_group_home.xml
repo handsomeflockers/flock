@@ -32,7 +32,7 @@
     </ListView>
 
     <Button
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/buttonMessages"
         android:text="Messages"
@@ -42,10 +42,20 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:layout_above="@+id/buttonMessages"
         android:id="@+id/buttonShoppingList"
         android:text="Shopping List"
+        android:textColor="#ffffff"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_margin="5dp"
+        android:layout_above="@+id/buttonShoppingList"
+        android:id="@+id/buttonTaskList"
+        android:text="Chores"
         android:textColor="#ffffff"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"

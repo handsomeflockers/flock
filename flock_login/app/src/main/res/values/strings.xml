@@ -2,4 +2,5 @@
     <string name="app_name">Flock</string>
     <string name="setting_name">Log Out</string>
     <string name="flock_name">Flock</string>
+    <string name="title_activity_task_list">TaskListActivity</string>
 </resources>
