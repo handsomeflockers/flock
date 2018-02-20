@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -41,11 +42,15 @@ public class ShoppingListAdapter extends ArrayAdapter {
             convertView = inflater.inflate(R.layout.shopping_list_layout, null);
         }
 
+        LinearLayout linearLayout;
         TextView textViewItem;
         CheckBox checkbox;
 
+        linearLayout = (LinearLayout) convertView.findViewById(R.id.msgBackground);
         textViewItem = (TextView) convertView.findViewById(R.id.textViewItem);
         checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
+
+        linearLayout.setOnTouchListener(null);
 
         checkedBool = itemList.get(position).getChecked();
 
