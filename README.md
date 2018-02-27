@@ -6,4 +6,4 @@ It's an android app based around family organisation
 
 ## Download it
 
-get the apk at downloadflock.com
+get the apk at [downloadflock.com](https://downloadflock.com/)
