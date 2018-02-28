@@ -18,7 +18,12 @@
         android:transcriptMode="alwaysScroll"
         android:layout_below="@+id/action_bar"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"/> />
+        android:dividerHeight="10.0sp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+
+
+        /> />
 
     <LinearLayout
         android:id="@+id/listFooter"

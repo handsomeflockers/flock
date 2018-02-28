@@ -60,6 +60,7 @@ public class MessageAdapter extends ArrayAdapter {
             textViewMessage.setTextColor(Color.parseColor("#212121"));
             linLayout.setBackgroundColor(Color.parseColor("#FF5722"));
             linLayout.setGravity(Gravity.RIGHT);
+
         }else if(messageList.get(position).getSender().equals("FLOCK")){
             //if FLOCK is the sender
             textViewSender.setText("FLOCK");
