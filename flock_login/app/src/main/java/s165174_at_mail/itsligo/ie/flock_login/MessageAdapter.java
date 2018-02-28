@@ -57,21 +57,22 @@ public class MessageAdapter extends ArrayAdapter {
         if(firebaseAuth.getCurrentUser().getUid().equals(messageList.get(position).getUid())){
             //sender uid is logged in user uid
             textViewSender.setText("");
-            textViewMessage.setTextColor(Color.parseColor("#FF4081"));
-            linLayout.setBackgroundColor(Color.parseColor("#9be7fc"));
+            textViewMessage.setTextColor(Color.parseColor("#212121"));
+            linLayout.setBackgroundColor(Color.parseColor("#FF5722"));
             linLayout.setGravity(Gravity.RIGHT);
         }else if(messageList.get(position).getSender().equals("FLOCK")){
             //if FLOCK is the sender
             textViewSender.setText("FLOCK");
             linLayout.setGravity(Gravity.CENTER);
-            linLayout.setBackgroundColor(Color.parseColor("#0691b8"));
-            textViewSender.setTextColor(Color.parseColor("#ffffff"));
-            textViewMessage.setTextColor(Color.parseColor("#ffffff"));
+            linLayout.setBackgroundColor(Color.parseColor("#757575"));
+            textViewSender.setTextColor(Color.parseColor("#FFFFFF"));
+            textViewMessage.setTextColor(Color.parseColor("#FFFFFF"));
         } else{
             textViewSender.setText(messageList.get(position).getSender());
-            linLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+            linLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
             linLayout.setGravity(Gravity.LEFT);
-            textViewSender.setTextColor(Color.parseColor("#0691b8"));
+            textViewSender.setTextColor(Color.parseColor("#757575"));
+            textViewMessage.setTextColor(Color.parseColor("#212121"));
         }
 
         return convertView;
