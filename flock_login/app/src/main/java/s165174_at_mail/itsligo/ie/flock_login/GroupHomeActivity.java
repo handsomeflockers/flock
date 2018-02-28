@@ -89,11 +89,13 @@ public class GroupHomeActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("  Flock");
 
         //Code To add app logo to action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher_mine);
+        actionBar.setIcon(R.drawable.ic_flock_logo);
+
 
         //set up components
         textViewHeading = (TextView) findViewById(R.id.textViewHeading);

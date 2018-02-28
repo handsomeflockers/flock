@@ -90,12 +90,12 @@ public class GroupActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My Groups");
+        getSupportActionBar().setTitle("  My Groups");
 
         //Code To add app logo to action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher_mine);
+        actionBar.setIcon(R.drawable.ic_flock_logo);
 
         buttonAddGroup = (Button) findViewById(R.id.buttonAddGroup);
         //buttonLogout= (Button) findViewById(R.id.buttonLogout);

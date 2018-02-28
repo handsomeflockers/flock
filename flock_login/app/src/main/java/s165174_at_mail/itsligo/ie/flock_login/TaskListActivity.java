@@ -85,12 +85,12 @@ public class TaskListActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Chores");
+        getSupportActionBar().setTitle("  Chores");
 
         //Code To add app logo to action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.mipmap.ic_launcher_mine);
+        actionBar.setIcon(R.drawable.ic_flock_logo);
 
         //get the user
         firebaseAuth = FirebaseAuth.getInstance();
