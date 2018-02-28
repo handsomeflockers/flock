@@ -3,6 +3,7 @@ package s165174_at_mail.itsligo.ie.flock_login;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -83,9 +84,16 @@ public class GroupHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_home);
 
+
+
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
+
+        //Code To add app logo to action bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_mine);
 
         //set up components
         textViewHeading = (TextView) findViewById(R.id.textViewHeading);

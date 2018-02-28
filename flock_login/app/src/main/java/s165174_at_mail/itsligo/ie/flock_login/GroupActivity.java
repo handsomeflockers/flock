@@ -3,6 +3,7 @@ package s165174_at_mail.itsligo.ie.flock_login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -81,6 +82,8 @@ public class GroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
+
+
         Log.d(TAG, "onCreate: CURRENTLY IN ONCREATE");
 
 
@@ -89,6 +92,10 @@ public class GroupActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Groups");
 
+        //Code To add app logo to action bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher_mine);
 
         buttonAddGroup = (Button) findViewById(R.id.buttonAddGroup);
         //buttonLogout= (Button) findViewById(R.id.buttonLogout);
