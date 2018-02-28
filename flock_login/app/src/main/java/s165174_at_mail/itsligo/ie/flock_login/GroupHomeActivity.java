@@ -6,39 +6,30 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class GroupHomeActivity extends AppCompatActivity {
 
-    private TextView textViewHeading;
-    private ListView listViewAddedMembers;
-    private Button buttonMessages;
-    private Button buttonShoppingList;
-    private Button buttonTaskList;
+    //private TextView textViewHeading;
+    //private ListView listViewAddedMembers;
+    private CardView buttonMessages;
+    private CardView buttonShoppingList;
+    private CardView buttonTaskList;
     //private Button buttonAddMember;
 
-    private ArrayAdapter<User> arrayAdapter;
-    private ArrayList<String> arrayListOfMembersString = new ArrayList<>();
-    private ArrayList<User> arrayListOfMembers = new ArrayList<>();
+    //private ArrayAdapter<User> arrayAdapter;
+    //private ArrayList<String> arrayListOfMembersString = new ArrayList<>();
+    //private ArrayList<User> arrayListOfMembers = new ArrayList<>();
 
     //get reference to root of database
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference();
@@ -89,7 +80,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("  Flock");
+
 
         //Code To add app logo to action bar
         ActionBar actionBar = getSupportActionBar();
@@ -98,16 +89,16 @@ public class GroupHomeActivity extends AppCompatActivity {
 
 
         //set up components
-        textViewHeading = (TextView) findViewById(R.id.textViewHeading);
-        listViewAddedMembers = (ListView) findViewById(R.id.listViewMembersInGroup);
-        buttonMessages = (Button) findViewById(R.id.buttonMessages);
-        buttonShoppingList = (Button) findViewById(R.id.buttonShoppingList);
-        buttonTaskList = (Button) findViewById(R.id.buttonTaskList);
+        //textViewHeading = (TextView) findViewById(R.id.textViewHeading);
+        //listViewAddedMembers = (ListView) findViewById(R.id.listViewMembersInGroup);
+        buttonMessages = (CardView) findViewById(R.id.buttonMessages);
+        buttonShoppingList = (CardView) findViewById(R.id.buttonShoppingList);
+        buttonTaskList = (CardView) findViewById(R.id.buttonTaskList);
 
         //array list for added members
-        arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
+        //arrayAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, arrayListOfMembers);
 
-        listViewAddedMembers.setAdapter(arrayAdapter);
+        //listViewAddedMembers.setAdapter(arrayAdapter);
 
         Intent intent= getIntent();
         Bundle bundle = intent.getExtras();
@@ -121,9 +112,11 @@ public class GroupHomeActivity extends AppCompatActivity {
             groupName =(String) bundle.get("groupName");
             Log.d("mmmmmmmmmmmmmmm", groupName);
         }
-
-        textViewHeading.setText(groupName);
-
+        if(groupName != null){
+            getSupportActionBar().setTitle(" " + groupName);
+        }
+        //textViewHeading.setText(groupName);
+/*
         groups.child(groupId).child("members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -142,9 +135,9 @@ public class GroupHomeActivity extends AppCompatActivity {
             }
 
         });
-
-        getUsers();
-        arrayAdapter.notifyDataSetChanged();
+*/
+        //getUsers();
+        //arrayAdapter.notifyDataSetChanged();
 
         buttonMessages.setOnClickListener(new View.OnClickListener(){
             //go to messages
@@ -171,7 +164,7 @@ public class GroupHomeActivity extends AppCompatActivity {
         });
     }
 
-
+/*
     public void getUsers(){
         arrayListOfMembers.clear();
         users.addValueEventListener(new ValueEventListener() {
@@ -198,7 +191,7 @@ public class GroupHomeActivity extends AppCompatActivity {
 
         arrayAdapter.notifyDataSetChanged();
     }
-
+*/
     private void goToMessages(){
         Intent i = new Intent(this, MessagesActivity.class);
         i.putExtra("groupId", groupId);
