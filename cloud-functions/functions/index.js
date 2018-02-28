@@ -1,3 +1,5 @@
+
+
 let functions = require('firebase-functions');
 let admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
@@ -78,12 +80,72 @@ exports.sendNotification = functions.database.ref('/messages/{groupId}/{pushId}'
 
 });//end exports.sendNotification()
 
+exports.deleteShoppingItem = functions.database.ref('/shoppingList/{groupId}/{itemId}')
+.onUpdate(event => {
+
+    const item = event.data.current.val();
+    const itemId = event.params.itemId;
+    const groupId = event.params.groupId;
+    const checked = item.checked;
+
+    return admin.database().ref(`/shoppingList/${groupId}/${itemId}`).once('value').then(items => {
+        items.forEach(function(tabs) {  
+            if ( checked ) {                                          
+              tabs.ref.remove();
+            }
+          
+        });
+      });
 
 
+/*
+    const item = event.data.current.val();
+    const itemId = event.params.itemId;
+    const groupId = event.params.groupId;
+    const checked = item.checked;
+    console.log('item = ' + item);
+    console.log('itemId = ' + itemId);
+    console.log('checked = ' + checked);
+    if(checked == "true"){
+        const x = admin.database.ref(`/shoppingList/${groupId}/${itemId}`).remove();
+        x.then(function(){
+            console.log('done');
+            return true;
+        });
+    }
+    return true;
+*/
+/*
+    return event.data.ref.parent.child('checked').once.apply('value').then(snapshot =>{
+const checked = snapshot.val()
 
+if(checked = "true"){
+    admin.database.ref('/shoppingList/{groupId}/{itemId}').remove()
+}
 
+    });
 
+*/
+});
 
+exports.deleteTaskItem = functions.database.ref('/taskList/{groupId}/{taskId}')
+.onUpdate(event => {
+      
+    const task = event.data.current.val();
+    const taskId = event.params.taskId;
+    const groupId = event.params.groupId;
+    const checked = task.checked;
+      
+    return admin.database().ref(`/taskList/${groupId}/${taskId}`).once('value').then(tasks => {
+        tasks.forEach(function(tabs) {  
+            if ( checked ) {                                          
+                tabs.ref.remove();
+            }
+                
+        });
+    });
+
+    });
 /*
 
 

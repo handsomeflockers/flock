@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\shane\Desktop\FlockGit\flock\flock_login\app\app.iml" filepath="C:\Users\shane\Desktop\FlockGit\flock\flock_login\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../../shane/Desktop/FlockGit/flock/flock_login/app/app.iml" filepath="$PROJECT_DIR$/../../../../shane/Desktop/FlockGit/flock/flock_login/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/flock_login.iml" filepath="$PROJECT_DIR$/flock_login.iml" />
-      <module fileurl="file://C:\Users\shane\Desktop\FlockGit\flock\flock_login\flock_login.iml" filepath="C:\Users\shane\Desktop\FlockGit\flock\flock_login\flock_login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../../shane/Desktop/FlockGit/flock/flock_login/flock_login.iml" filepath="$PROJECT_DIR$/../../../../shane/Desktop/FlockGit/flock/flock_login/flock_login.iml" />
     </modules>
   </component>
 </project>
