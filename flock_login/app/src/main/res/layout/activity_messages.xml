@@ -21,16 +21,19 @@
         android:dividerHeight="10.0sp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
+        android:color="#FFFFFF"
+        />
 
 
-        /> />
+
 
     <LinearLayout
         android:id="@+id/listFooter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <EditText
             android:id="@+id/editTextMessage"
@@ -39,7 +42,9 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:maxLines="1" />
+            android:maxLines="1"
+
+            />
 
         <ImageButton
             android:id="@+id/buttonSend"

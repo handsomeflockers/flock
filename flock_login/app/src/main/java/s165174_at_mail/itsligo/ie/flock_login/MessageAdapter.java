@@ -58,8 +58,11 @@ public class MessageAdapter extends ArrayAdapter {
             //sender uid is logged in user uid
             textViewSender.setText("");
             textViewMessage.setTextColor(Color.parseColor("#212121"));
-            linLayout.setBackgroundColor(Color.parseColor("#FF5722"));
+            linLayout.setBackgroundColor(Color.parseColor("#BDBDBD"));
             linLayout.setGravity(Gravity.RIGHT);
+
+
+
 
         }else if(messageList.get(position).getSender().equals("FLOCK")){
             //if FLOCK is the sender
@@ -72,6 +75,7 @@ public class MessageAdapter extends ArrayAdapter {
             textViewSender.setText(messageList.get(position).getSender());
             linLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
             linLayout.setGravity(Gravity.LEFT);
+
             textViewSender.setTextColor(Color.parseColor("#757575"));
             textViewMessage.setTextColor(Color.parseColor("#212121"));
         }

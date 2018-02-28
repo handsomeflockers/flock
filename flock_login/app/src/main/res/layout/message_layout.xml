@@ -7,7 +7,9 @@
     android:padding="4dp"
     android:background="@color/colorPrimaryLight"
     android:layout_marginStart="4dp"
-    android:layout_marginLeft="4dp">
+    android:layout_marginLeft="4dp"
+
+    >
 
     <TextView
         android:textColor="#fff"
@@ -15,7 +17,9 @@
         android:id="@+id/textViewSender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="6dp"/>
+        android:paddingLeft="6dp"
+
+        />
 
     <TextView
         android:id="@+id/textViewMessage"
