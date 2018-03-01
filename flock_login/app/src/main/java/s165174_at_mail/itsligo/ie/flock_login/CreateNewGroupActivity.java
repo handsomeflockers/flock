@@ -2,6 +2,7 @@ package s165174_at_mail.itsligo.ie.flock_login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -79,7 +80,12 @@ public class CreateNewGroupActivity extends AppCompatActivity {
         //To show action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Create a new group");
+        getSupportActionBar().setTitle("  Create a new group");
+
+        //Code To add app logo to action bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_flock_logo);
 
         buttonAddGroup = (Button) findViewById(R.id.buttonCreateGroup);
         buttonAddNumber = (Button) findViewById(R.id.buttonAddNumber);
